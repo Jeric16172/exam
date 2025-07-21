@@ -81,3 +81,60 @@ const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
 });
+
+// ✅ Add Student (Insert only name and age)
+app.post('/api/students', (req, res) => {
+  const { firstName, lastName, username, email, contact, password } = req.body;
+
+  db.get("SELECT * FROM students WHERE email = ?", [email], (err, row) => {
+    if (err) return res.status(500).json({ message: "DB error", error: err });
+    if (row) return res.status(400).json({ message: "Student already exists" });
+
+    db.run(`
+      INSERT INTO students (firstName, lastName, username, email, contact, password)
+      VALUES (?, ?, ?, ?, ?, ?)`,
+      [firstName, lastName, username, email, contact, password], // unhashed for demo
+      function (err) {
+        if (err) return res.status(500).json({ message: "Insert error", error: err });
+        res.json({ message: "Student inserted", id: this.lastID });
+      }
+    );
+  });
+});
+
+// ✅ Get All Students
+app.get('/api/students', (req, res) => {
+  db.all("SELECT id, firstName, lastName, email, contact FROM students", [], (err, rows) => {
+    if (err) return res.status(500).json({ message: "DB error", error: err });
+    res.json(rows);
+  });
+});
+
+// Update a student
+app.put('/api/students/:id', (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, username, email, contact, password } = req.body;
+
+  db.run(`
+    UPDATE students SET firstName = ?, lastName = ?, username = ?, email = ?, contact = ?, password = ?
+    WHERE id = ?
+  `, [firstName, lastName, username, email, contact, password, id], function (err) {
+    if (err) return res.status(500).json({ message: "Update error", error: err });
+    res.json({ message: "Student updated successfully" });
+  });
+});
+
+
+// Delete a student
+// Example using Express
+app.delete("/api/students/:id", (req, res) => {
+  const { id } = req.params;
+
+  db.run("DELETE FROM students WHERE id = ?", [id], function (err) {
+    if (err) return res.status(500).json({ message: "Delete failed", error: err });
+    res.json({ message: "Deleted successfully" });
+  });
+});
+
+
+
