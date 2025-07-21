@@ -1,0 +1,50 @@
+{
+  "name": "Button",
+  "initialClassName": "flex items-center justify-center gap-2 transition-colors duration-150 font-semibold border-2",
+  "defaultIconSize": 22,
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": ["filled", "plain", "outlined", "opacity", "grey"],
+      "default": "filled"
+    },
+    "size": {
+      "type": "enum",
+      "values": ["default", "small"],
+      "default": "default"
+    },
+    "icon": {
+      "type": "ReactNode",
+      "optional": true
+    },
+    "iconPosition": {
+      "type": "enum",
+      "values": ["none", "left", "right", "both"],
+      "default": "none"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "optional": true
+    },
+    "className": {
+      "type": "string",
+      "optional": true
+    }
+  },
+  "styles": {
+    "variantStyles": {
+      "filled": "bg-primary text-plain text-foreground-dark cursor-pointer",
+      "plain": "bg-plain text-primary border-transparent cursor-pointer",
+      "outlined": "bg-plain text-primary border-primary border-primary cursor-pointer",
+      "opacity": "bg-primary-faded text-primary border-transparent cursor-pointer",
+      "grey": "bg-foreground-tertiary text-foreground-secondary border-transparent cursor-not-allowed"
+    },
+    "sizeStyles": {
+      "md": "px-5 py-2 rounded-lg text-base font-medium min-w-fit h-11",
+      "sm": "px-4 py-1.5 rounded-lg text-sm font-medium min-w-fit h-9",
+      "icon-md": "w-11 h-11 rounded-full flex items-center justify-center",
+      "icon-sm": "w-9 h-9 rounded-full flex items-center justify-center"
+    }
+  }
+}

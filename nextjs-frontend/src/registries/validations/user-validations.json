@@ -1,0 +1,41 @@
+{
+  "userProfile": {
+    "name": [
+      {
+        "type": "required",
+        "message": "Name is required"
+      },
+      {
+        "type": "minLength",
+        "value": 2,
+        "message": "Name must be at least 2 characters"
+      },
+      {
+        "type": "maxLength",
+        "value": 50,
+        "message": "Name must not exceed 50 characters"
+      }
+    ],
+    "email": [
+      {
+        "type": "required",
+        "message": "Email is required"
+      },
+      {
+        "type": "email",
+        "message": "Please enter a valid email address"
+      }
+    ],
+    "age": [
+      {
+        "type": "required",
+        "message": "Age is required"
+      },
+      {
+        "type": "pattern",
+        "value": "^[1-9]\\d*$",
+        "message": "Age must be a positive number"
+      }
+    ]
+  }
+}
